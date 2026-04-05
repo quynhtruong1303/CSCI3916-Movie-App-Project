@@ -3,15 +3,14 @@ import { fetchMovie } from '../actions/movieActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, ListGroup, ListGroupItem, Image } from 'react-bootstrap';
 import { BsStarFill } from 'react-icons/bs';
-import { useParams } from 'react-router-dom'; // Import useParams
+import { useParams } from 'react-router-dom';
 
 const MovieDetail = () => {
   const dispatch = useDispatch();
-  const { movieId } = useParams(); // Get movieId from URL parameters
+  const { movieId } = useParams();
   const selectedMovie = useSelector(state => state.movie.selectedMovie);
-  const loading = useSelector(state => state.movie.loading); // Assuming you have a loading state in your reducer
-  const error = useSelector(state => state.movie.error); // Assuming you have an error state in your reducer
-
+  const loading = useSelector(state => state.movie.loading);
+  const error = useSelector(state => state.movie.error);
 
   useEffect(() => {
     dispatch(fetchMovie(movieId));
@@ -33,9 +32,14 @@ const MovieDetail = () => {
     return (
       <Card className="bg-dark text-dark p-4 rounded">
         <Card.Header>Movie Detail</Card.Header>
-        <Card.Body>
-          <Image className="image" src={selectedMovie.imageUrl} thumbnail />
-        </Card.Body>
+
+        {/* Only show image if the movie has an imageUrl */}
+        {selectedMovie.imageUrl && (
+          <Card.Body>
+            <Image className="image" src={selectedMovie.imageUrl} thumbnail />
+          </Card.Body>
+        )}
+
         <ListGroup>
           <ListGroupItem>{selectedMovie.title}</ListGroupItem>
           <ListGroupItem>
@@ -47,17 +51,24 @@ const MovieDetail = () => {
           </ListGroupItem>
           <ListGroupItem>
             <h4>
-              <BsStarFill /> {selectedMovie.avgRating}
+              {/* avgRating is computed by the backend $lookup aggregation */}
+              <BsStarFill /> {selectedMovie.avgRating || 'N/A'}
             </h4>
           </ListGroupItem>
         </ListGroup>
+
         <Card.Body className="card-body bg-white">
-          {selectedMovie.reviews.map((review, i) => (
-            <p key={i}>
-              <b>{review.username}</b>&nbsp; {review.review} &nbsp; <BsStarFill />{' '}
-              {review.rating}
-            </p>
-          ))}
+          {/* Guard against missing or empty reviews array */}
+          {selectedMovie.reviews && selectedMovie.reviews.length > 0 ? (
+            selectedMovie.reviews.map((review, i) => (
+              <p key={i}>
+                <b>{review.username}</b>&nbsp; {review.review} &nbsp; <BsStarFill />{' '}
+                {review.rating}
+              </p>
+            ))
+          ) : (
+            <p>No reviews yet.</p>
+          )}
         </Card.Body>
       </Card>
     );
@@ -65,6 +76,5 @@ const MovieDetail = () => {
 
   return <DetailInfo />;
 };
-
 
 export default MovieDetail;
