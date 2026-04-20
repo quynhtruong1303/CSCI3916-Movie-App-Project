@@ -1,6 +1,6 @@
 # CSC3916 Movie App
 
-A React single-page application for the CSC3916 Web API course. This app interacts with the Assignment 4 REST API to provide user authentication, movie browsing, and movie reviews functionality.
+A React single-page application for the CSC3916 Web API course. This app interacts with the Assignment 5 REST API to provide user authentication, movie browsing, movie reviews, and review submission functionality.
 
 ## Live Demo
 
@@ -8,15 +8,16 @@ A React single-page application for the CSC3916 Web API course. This app interac
 
 ## API
 
-This app connects to the Assignment 4 API deployed at:
-[https://csci3916-hw4-g2px.onrender.com](https://csci3916-hw4-g2px.onrender.com)
+This app connects to the Assignment 5 API deployed at:
+[https://csci3916-hw5-qrly.onrender.com](https://csci3916-hw5-qrly.onrender.com)
 
 ## Features
 
 - User signup and signin with JWT authentication
-- Browse movies from a MongoDB-backed REST API
-- Movie detail view with aggregated reviews and average star rating
-- Protected routes - movie content only accessible after signing in
+- Browse top-rated movies sorted by average rating
+- Movie detail view with poster image, actors, aggregated reviews, and average star rating
+- Submit a review (rating + comment) directly from the movie detail page
+- Search movies by partial title or actor name (extra credit)
 
 ## Getting Started
 
@@ -36,7 +37,7 @@ npm install
 Create a `.env.development` file in the project root:
 
 ```
-REACT_APP_API_URL=https://csci3916-hw4-g2px.onrender.com
+REACT_APP_API_URL=https://csci3916-hw5-qrly.onrender.com
 ```
 
 ### Run Locally
