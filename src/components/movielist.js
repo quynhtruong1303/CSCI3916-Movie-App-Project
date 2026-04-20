@@ -35,7 +35,12 @@ function MovieList() {
         <Carousel onSelect={handleSelect} className="bg-dark text-light p-4 rounded">
           {memoizedMovies.map((movie) => (
             <Carousel.Item key={movie._id}>
-              {/* Use Nav.Link with "as={Link}" to avoid nested anchors */}
+              <div className="text-center mb-2">
+                <h3 className="text-light" style={{ margin: 0 }}>{movie.title}</h3>
+                <span className="text-light" style={{ fontSize: '0.95rem' }}>
+                  <BsStarFill /> {movie.avgRating} &nbsp;&nbsp; {movie.releaseDate}
+                </span>
+              </div>
               <Nav.Link
                 as={Link}
                 to={`/movie/${movie._id}`}
@@ -43,10 +48,6 @@ function MovieList() {
               >
                 <Image className="image" src={movie.imageUrl} thumbnail />
               </Nav.Link>
-              <Carousel.Caption>
-                <h3>{movie.title}</h3>
-                <BsStarFill /> {movie.avgRating} &nbsp;&nbsp; {movie.releaseDate}
-              </Carousel.Caption>
             </Carousel.Item>
           ))}
         </Carousel>
